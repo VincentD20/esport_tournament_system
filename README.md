@@ -110,7 +110,7 @@ Týmy budou seřazeny podle počtu získaných bodů.
 Při shodě bodů rozhodne rozdíl skóre.
 
 ## Ukázka hlavního menu
-
+~~~
 ================================
        E-SPORT TURNAJ
 ================================
@@ -123,7 +123,7 @@ Při shodě bodů rozhodne rozdíl skóre.
 0. Konec
 
 Vyber možnost:
-
+~~~
 ## GitHub a týmová spolupráce
 
 Při práci na projektu budeme používat:
