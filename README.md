@@ -19,6 +19,7 @@ Program umožňuje zapisovat výsledky zápasů, počítat body týmů, zobrazov
 
 ## 📁 Struktura projektu
 
+```
 EsportTurnaj/
 │
 ├── Program.cs
@@ -28,6 +29,7 @@ EsportTurnaj/
 ├── Turnaj.cs
 ├── README.md
 └── .gitignore
+```
 
 ## 🧱 Třídy v projektu
 
