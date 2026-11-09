@@ -3,7 +3,6 @@
 ## 📌 O projektu
 
 E-sport turnajový systém je konzolová aplikace vytvořená v jazyce C#. Slouží ke správě herních turnajů, hráčů, týmů a zápasů.
-
 Program umožňuje zapisovat výsledky zápasů, počítat body týmů, zobrazovat turnajovou tabulku a statistiky.
 
 ## 🎯 Hlavní funkce
@@ -17,13 +16,6 @@ Program umožňuje zapisovat výsledky zápasů, počítat body týmů, zobrazov
 - Výpočet bodů týmů.
 - Zobrazování turnajové tabulky.
 - Výpis statistik týmů.
-
-## 💻 Použité technologie
-
-- C#
-- .NET
-- Visual Studio
-- Git a GitHub
 
 ## 📁 Struktura projektu
 
@@ -182,13 +174,3 @@ Při práci na projektu budeme používat:
 | 6 | Propojení tříd |
 | 7 | Testování a opravy |
 | 8 | Dokončení dokumentace a prezentace |
-
-## 🎯 Cíl projektu
-
-Cílem je vytvořit funkční konzolovou aplikaci v C#, která umožní spravovat e-sport turnaj od vytvoření týmů až po vyhodnocení výsledků a zobrazení konečné tabulky.
-
-Zároveň si procvičíme objektově orientované programování, práci s GitHubem a týmovou spolupráci.
-
----
-
-**Školní týmový projekt – IT3A**
