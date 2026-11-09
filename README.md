@@ -1,7 +1,7 @@
 # esport_tournament_system
 
 Rozdělení práce v týmu
-Člen 1 – Hráči a týmy
+## Člen 1 – Hráči a týmy
 
 Soubory: Hrac.cs, Tym.cs
 
@@ -10,7 +10,7 @@ Přidávání a mazání hráčů.
 Vytváření a správa týmů.
 Přidávání hráčů do týmů.
 Výpis hráčů a týmů.
-Člen 2 – Zápasy
+## Člen 2 – Zápasy
 
 Soubor: Zapas.cs
 
@@ -19,7 +19,7 @@ Zapisování výsledků zápasů.
 Určování vítěze zápasu.
 Výpis odehraných zápasů.
 Evidence výher a proher.
-Člen 3 – Turnaj a statistiky
+## Člen 3 – Turnaj a statistiky
 
 Soubor: Turnaj.cs
 
