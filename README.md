@@ -56,9 +56,9 @@ EsportTurnaj/
 - Turnajová tabulka
 - Statistiky
 
-## 👥 Rozdělení práce v týmu
+## Rozdělení práce v týmu
 
-### Člen 1 – Hráči a týmy
+### Vincent(Správce repozitáře) – Hráči a týmy
 
 **Soubory:** `Hrac.cs`, `Tym.cs`
 
@@ -68,7 +68,7 @@ EsportTurnaj/
 - Přidávání hráčů do týmů.
 - Výpis hráčů a týmů.
 
-### Člen 2 – Zápasy
+### Kryštof(správce dokumentace a testů) – Zápasy
 
 **Soubor:** `Zapas.cs`
 
@@ -78,7 +78,7 @@ EsportTurnaj/
 - Výpis odehraných zápasů.
 - Evidence výher a proher.
 
-### Člen 3 – Turnaj a statistiky
+### Daniel(správce úkolů) – Turnaj a statistiky 
 
 **Soubor:** `Turnaj.cs`
 
@@ -96,7 +96,7 @@ EsportTurnaj/
 - Oprava chyb.
 - Spolupráce přes GitHub.
 
-## 🏆 Bodovací systém
+## Bodovací systém
 
 | Výsledek | Body |
 |---|---:|
@@ -107,7 +107,7 @@ EsportTurnaj/
 Týmy budou seřazeny podle počtu získaných bodů.
 Při shodě bodů rozhodne rozdíl skóre.
 
-## 🖥️ Ukázka hlavního menu
+## Ukázka hlavního menu
 
 ================================
        E-SPORT TURNAJ
@@ -122,7 +122,7 @@ Při shodě bodů rozhodne rozdíl skóre.
 
 Vyber možnost:
 
-## 🔄 GitHub a týmová spolupráce
+## GitHub a týmová spolupráce
 
 Při práci na projektu budeme používat:
 
@@ -145,7 +145,7 @@ Při práci na projektu budeme používat:
 7. Spolužák zkontroluje náš kód.
 8. Po schválení sloučíme změny do hlavní větve.
 
-## 📋 Týmová dohoda
+## Týmová dohoda
 
 1. Každý člen zodpovídá za svou přidělenou část projektu.
 2. Změny v hlavní větvi provádíme přes Pull Request.
@@ -153,7 +153,7 @@ Při práci na projektu budeme používat:
 4. Před sloučením kódu provedeme kontrolu spolužákem.
 5. Při problému nebo konfliktu se nejdříve domluvíme společně.
 
-## 🚀 Možná budoucí vylepšení
+## Možná budoucí vylepšení
 
 - Turnajový pavouk.
 - Výběr konkrétní hry (CS2, League of Legends, Valorant).
@@ -162,7 +162,7 @@ Při práci na projektu budeme používat:
 - Ukládání dat do SQLite databáze.
 - Grafické uživatelské rozhraní.
 
-## 📅 Plán práce
+## Plán práce
 
 | Fáze | Úkol |
 |---|---|
