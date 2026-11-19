@@ -1,178 +1,105 @@
-# 🎮 E-sport turnajový systém
+# Esport Tournament System
 
-## 📌 O projektu
+Konzolová aplikace v jazyce **C#** určená pro správu esportových turnajů. Umožňuje vytvářet hráče a týmy, organizovat turnaje, zaznamenávat výsledky zápasů a zobrazovat průběžné pořadí týmů.
 
-E-sport turnajový systém je konzolová aplikace vytvořená v jazyce C#. Slouží ke správě herních turnajů, hráčů, týmů a zápasů.
-Program umožňuje zapisovat výsledky zápasů, počítat body týmů, zobrazovat turnajovou tabulku a statistiky.
+## Funkce aplikace
 
-## 🎯 Hlavní funkce
+### Správa hráčů
+- Vytváření a mazání hráčů.
+- Evidence jména a přezdívky.
+- Kontrola duplicitních přezdívek.
+- Zobrazení všech registrovaných hráčů.
 
-- Přidávání a správa hráčů.
-- Vytváření a správa týmů.
-- Přidávání hráčů do týmů.
-- Vytváření zápasů mezi týmy.
-- Zapisování výsledků zápasů.
-- Určování vítězů.
-- Výpočet bodů týmů.
-- Zobrazování turnajové tabulky.
-- Výpis statistik týmů.
+### Správa týmů
+- Vytváření a mazání týmů.
+- Přidávání a odebírání hráčů.
+- Zobrazení seznamu týmů a jejich hráčů.
+- Kontrola, aby hráč nemohl být současně členem více týmů.
 
-## 📁 Struktura projektu
+### Správa turnajů
+- Vytváření více turnajů.
+- Přidávání týmů do turnajů.
+- Zobrazení týmů jednotlivých turnajů.
+- Samostatné statistiky pro každý turnaj.
 
-```
-EsportTurnaj/
-│
-├── Program.cs
-├── Hrac.cs
-├── Tym.cs
-├── Zapas.cs
-├── Turnaj.cs
-├── README.md
-└── .gitignore
-```
+### Správa zápasů
+- Vytváření zápasů mezi týmy daného turnaje.
+- Zaznamenávání výsledků.
+- Určení vítěze nebo remízy.
+- Zobrazení všech zápasů v turnaji.
+- Ochrana proti opakovanému zaznamenání výsledku.
 
-## 🧱 Třídy v projektu
-
-### Hrac
-- Jméno
-- Přezdívka
-- Přiřazený tým
-
-### Tym
-- Název týmu
-- Seznam hráčů
-- Počet výher
-- Počet proher
-- Počet bodů
-
-### Zapas
-- Domácí tým
-- Hostující tým
-- Skóre
-- Vítěz
-
-### Turnaj
-- Seznam týmů
-- Seznam zápasů
-- Výpočet bodů
-- Turnajová tabulka
-- Statistiky
-
-## Rozdělení práce v týmu
-
-### Vincent(Správce repozitáře) – Hráči a týmy
-
-**Soubory:** `Hrac.cs`, `Tym.cs`
-
-- Vytváření a správa hráčů.
-- Přidávání a mazání hráčů.
-- Vytváření a správa týmů.
-- Přidávání hráčů do týmů.
-- Výpis hráčů a týmů.
-
-### Kryštof(správce dokumentace a testů) – Zápasy
-
-**Soubor:** `Zapas.cs`
-
-- Vytváření zápasů mezi týmy.
-- Zapisování výsledků zápasů.
-- Určování vítěze zápasu.
-- Výpis odehraných zápasů.
-- Evidence výher a proher.
-
-### Daniel(správce úkolů) – Turnaj a statistiky 
-
-**Soubor:** `Turnaj.cs`
-
-- Správa turnaje.
-- Výpočet bodů týmů.
-- Vytváření turnajové tabulky.
-- Řazení týmů podle bodů.
-- Statistiky a nejlepší týmy.
-
-### Společná práce
-
-- Propojení jednotlivých částí programu.
-- Vytvoření hlavního menu v `Program.cs`.
-- Testování programu.
-- Oprava chyb.
-- Spolupráce přes GitHub.
+### Tabulka turnaje
+- Automatické řazení týmů podle získaných bodů.
+- Zohlednění rozdílu skóre při shodném počtu bodů.
+- Zobrazení výher, remíz, proher a vstřelených a obdržených gólů.
 
 ## Bodovací systém
 
-| Výsledek | Body |
+| Výsledek zápasu | Získané body |
 |---|---:|
-| Výhra | 3 |
-| Remíza | 1 |
-| Prohra | 0 |
+| Výhra | 3 body |
+| Remíza | 1 bod |
+| Prohra | 0 bodů |
 
-Týmy budou seřazeny podle počtu získaných bodů.
-Při shodě bodů rozhodne rozdíl skóre.
+Týmy jsou v tabulce řazeny podle následujících kritérií:
 
-## Ukázka hlavního menu
-~~~
-================================
-       E-SPORT TURNAJ
-================================
+1. Vyšší počet bodů.
+2. Vyšší rozdíl skóre (vstřelené góly minus obdržené góly).
+3. Abecední pořadí názvu týmu.
 
-1. Správa hráčů
-2. Správa týmů
-3. Správa zápasů
-4. Turnajová tabulka
-5. Statistiky
-0. Konec
+## Struktura projektu
 
-Vyber možnost:
-~~~
-## GitHub a týmová spolupráce
-
-Při práci na projektu budeme používat:
-
-- **Repository** – společné úložiště projektu.
-- **Issues** – rozdělení jednotlivých úkolů.
-- **Projects / Board** – přehled úkolů.
-- **Branches** – samostatné větve pro jednotlivé členy.
-- **Commits** – ukládání změn.
-- **Pull Requests** – slučování hotových částí projektu.
-- **Code Review** – kontrola kódu spolužáky.
-
-### Postup práce
-
-1. Vybereme si Issue.
-2. Vytvoříme vlastní větev.
-3. Naprogramujeme přidělený úkol.
-4. Provedeme commity.
-5. Nahrajeme větev na GitHub.
-6. Vytvoříme Pull Request.
-7. Spolužák zkontroluje náš kód.
-8. Po schválení sloučíme změny do hlavní větve.
-
-## Týmová dohoda
-
-1. Každý člen zodpovídá za svou přidělenou část projektu.
-2. Změny v hlavní větvi provádíme přes Pull Request.
-3. Každý člen pravidelně aktualizuje své Issues.
-4. Před sloučením kódu provedeme kontrolu spolužákem.
-5. Při problému nebo konfliktu se nejdříve domluvíme společně.
-
-## Možná budoucí vylepšení
-
-- Turnajový pavouk.
-- Výběr konkrétní hry (CS2, League of Legends, Valorant).
-- Nejlepší hráč turnaje.
-- Historie zápasů.
-- Ukládání dat do SQLite databáze.
-- Grafické uživatelské rozhraní.
-
-## Plán práce
-
-| Fáze | Úkol |
+| Soubor | Popis |
 |---|---|
-| 1 | Založení projektu a GitHubu |
-| 2 | Vytvoření tříd |
-| 3 | Programování hráčů a týmů |
-| 4 | Programování zápasů |
-| 5 | Programování turnajové tabulky |
-| 6 | Propojení tříd |
-| 7 | Testování a opravy |
-| 8 | Dokončení dokumentace a prezentace |
+| `Program.cs` | Hlavní program, menu a uživatelské rozhraní. |
+| `Hrac.cs` | Reprezentace hráče a jeho údajů. |
+| `Tym.cs` | Reprezentace týmu a správa jeho hráčů. |
+| `SpravaHracu.cs` | Evidence a správa hráčů a týmů. |
+| `Zapas.cs` | Reprezentace zápasu, jeho výsledku a vítěze. |
+| `Turnaj.cs` | Správa turnaje, zápasů, statistik a výsledkové tabulky. |
+
+## Architektura
+
+Aplikace využívá objektově orientovaný přístup a rozděluje jednotlivé části funkcionality do samostatných tříd.
+
+Každý turnaj spravuje vlastní seznam týmů, zápasů a statistik. Jeden tým se proto může účastnit více turnajů, aniž by se jeho statistiky mezi jednotlivými turnaji vzájemně ovlivňovaly.
+
+Hlavní program zajišťuje komunikaci s uživatelem prostřednictvím konzolového menu a využívá jednotlivé třídy pro zpracování operací.
+
+## Požadavky
+
+- Windows, Linux nebo macOS.
+- Nainstalovaný .NET SDK kompatibilní s cílovým frameworkem projektu.
+- Vývojové prostředí podporující C# (například Visual Studio nebo Visual Studio Code).
+
+## Spuštění aplikace
+
+1. Naklonujte repozitář:
+
+   ```bash
+   git clone <URL_REPOZITARE>
+   ```
+
+2. Přejděte do složky projektu:
+
+   ```bash
+   cd Esport_tournament_system
+   ```
+
+3. Spusťte aplikaci:
+
+   ```bash
+   dotnet run
+   ```
+
+## Použité technologie
+
+- **Programovací jazyk:** C#
+- **Platforma:** .NET
+- **Typ aplikace:** Konzolová aplikace
+- **Správa verzí:** Git a GitHub
+
+---
+
+*Projekt byl vytvořen jako týmová práce v rámci vývoje aplikace pro správu esportových turnajů.*
