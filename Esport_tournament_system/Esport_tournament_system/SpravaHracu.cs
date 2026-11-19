@@ -1,239 +1,259 @@
-﻿using Esport_tournament_system;
-using System;
+﻿using System;
 using System.Collections.Generic;
-
-public class SpravaHracu
+namespace Esport_tournament_system
 {
-    private readonly List<Hrac> _hraci = new List<Hrac>();
-    private readonly List<Tym> _tymy = new List<Tym>();
-    public Hrac? VytvoritHrace(string jmeno, string prezdivka)
+    public class SpravaHracu
     {
-        // Kontrola duplicitní přezdívky
-        foreach (Hrac hrac in _hraci)
+        private readonly List<Hrac> _hraci = new List<Hrac>();
+        private readonly List<Tym> _tymy = new List<Tym>();
+        public Hrac? VytvoritHrace(string jmeno, string prezdivka)
         {
-            if (string.Equals(
-                hrac.Prezdivka,
-                prezdivka,
-                StringComparison.OrdinalIgnoreCase))
+            if (string.IsNullOrWhiteSpace(jmeno) || string.IsNullOrWhiteSpace(prezdivka))
             {
-                Console.WriteLine("Hráč s touto přezdívkou už existuje.");
+                Console.WriteLine("Jméno a přezdívka nesmí být prázdné.");
                 return null;
             }
-        }
 
-        // Vytvoření a uložení hráče
-        Hrac novyHrac = new Hrac(jmeno, prezdivka);
-        _hraci.Add(novyHrac);
-
-        Console.WriteLine($"Hráč {prezdivka} byl vytvořen.");
-
-        return novyHrac;
-    }
-    public Tym? VytvoritTym(string nazev)
-    {
-        // Kontrola duplicitního názvu
-        foreach (Tym tym in _tymy)
-        {
-            if (string.Equals(
-                tym.Nazev,
-                nazev,
-                StringComparison.OrdinalIgnoreCase))
+            // Kontrola duplicitní přezdívky
+            foreach (Hrac hrac in _hraci)
             {
-                Console.WriteLine("Tým s tímto názvem už existuje.");
+                if (string.Equals(
+                    hrac.Prezdivka,
+                    prezdivka,
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    Console.WriteLine("Hráč s touto přezdívkou už existuje.");
+                    return null;
+                }
+            }
+
+            // Vytvoření a uložení hráče
+            Hrac novyHrac = new Hrac(jmeno, prezdivka);
+            _hraci.Add(novyHrac);
+
+            Console.WriteLine($"Hráč {prezdivka} byl vytvořen.");
+
+            return novyHrac;
+        }
+        public Tym? VytvoritTym(string nazev)
+        {
+            if (string.IsNullOrWhiteSpace(nazev))
+            {
+                Console.WriteLine("Název týmu nesmí být prázdný.");
                 return null;
             }
-        }
-
-        // Vytvoření a uložení týmu
-        Tym novyTym = new Tym(nazev);
-        _tymy.Add(novyTym);
-
-        Console.WriteLine($"Tým {nazev} byl vytvořen.");
-
-        return novyTym;
-    }
-    public bool SmazatHrace(string prezdivka)
-    {
-        // Vyhledání hráče podle přezdívky
-        Hrac? hrac = null;
-
-        foreach (Hrac hledany in _hraci)
-        {
-            if (string.Equals(
-                hledany.Prezdivka,
-                prezdivka,
-                StringComparison.OrdinalIgnoreCase))
+            // Kontrola duplicitního názvu
+            foreach (Tym tym in _tymy)
             {
-                hrac = hledany;
-                break;
+                if (string.Equals(
+                    tym.Nazev,
+                    nazev,
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    Console.WriteLine("Tým s tímto názvem už existuje.");
+                    return null;
+                }
+            }
+
+            // Vytvoření a uložení týmu
+            Tym novyTym = new Tym(nazev);
+            _tymy.Add(novyTym);
+
+            Console.WriteLine($"Tým {nazev} byl vytvořen.");
+
+            return novyTym;
+        }
+        public bool SmazatHrace(string prezdivka)
+        {
+            // Vyhledání hráče podle přezdívky
+            Hrac? hrac = null;
+
+            foreach (Hrac hledany in _hraci)
+            {
+                if (string.Equals(
+                    hledany.Prezdivka,
+                    prezdivka,
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    hrac = hledany;
+                    break;
+                }
+            }
+
+            // Kontrola, zda hráč existuje
+            if (hrac == null)
+            {
+                Console.WriteLine("Hráč nebyl nalezen.");
+                return false;
+            }
+
+            // Odebrání hráče z týmu, pokud v nějakém je
+            if (hrac.PrirazenyTym != null)
+            {
+                hrac.PrirazenyTym.OdebratHrace(hrac);
+            }
+
+            // Odstranění hráče z evidence
+            _hraci.Remove(hrac);
+
+            Console.WriteLine($"Hráč {prezdivka} byl smazán.");
+
+            return true;
+        }
+        public bool SmazatTym(string nazev)
+        {
+            // Vyhledání týmu
+            Tym? tym = null;
+
+            foreach (Tym hledany in _tymy)
+            {
+                if (string.Equals(
+                    hledany.Nazev,
+                    nazev,
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    tym = hledany;
+                    break;
+                }
+            }
+
+            // Kontrola, zda tým existuje
+            if (tym == null)
+            {
+                Console.WriteLine("Tým nebyl nalezen.");
+                return false;
+            }
+
+            // Odebrání všech hráčů z týmu
+            while (tym.Hraci.Count > 0)
+            {
+                tym.OdebratHrace(tym.Hraci[0]);
+            }
+
+            // Odstranění týmu z evidence
+            _tymy.Remove(tym);
+
+            Console.WriteLine($"Tým {nazev} byl smazán.");
+
+            return true;
+        }
+        public void VypsatVsechnyHrace()
+        {
+            Console.WriteLine("\n=== SEZNAM HRÁČŮ ===");
+
+            if (_hraci.Count == 0)
+            {
+                Console.WriteLine("Zatím nejsou registrováni žádní hráči.");
+                return;
+            }
+
+            foreach (Hrac hrac in _hraci)
+            {
+                string tym = hrac.PrirazenyTym?.Nazev ?? "Bez týmu";
+
+                Console.WriteLine(
+                    $"Jméno: {hrac.Jmeno} | " +
+                    $"Přezdívka: {hrac.Prezdivka} | " +
+                    $"Tým: {tym}");
             }
         }
-
-        // Kontrola, zda hráč existuje
-        if (hrac == null)
+        public void VypsatVsechnyTymy()
         {
-            Console.WriteLine("Hráč nebyl nalezen.");
-            return false;
-        }
+            Console.WriteLine("\n=== SEZNAM TÝMŮ ===");
 
-        // Odebrání hráče z týmu, pokud v nějakém je
-        if (hrac.PrirazenyTym != null)
-        {
-            hrac.PrirazenyTym.OdebratHrace(hrac);
-        }
-
-        // Odstranění hráče z evidence
-        _hraci.Remove(hrac);
-
-        Console.WriteLine($"Hráč {prezdivka} byl smazán.");
-
-        return true;
-    }
-    public bool SmazatTym(string nazev)
-    {
-        // Vyhledání týmu
-        Tym? tym = null;
-
-        foreach (Tym hledany in _tymy)
-        {
-            if (string.Equals(
-                hledany.Nazev,
-                nazev,
-                StringComparison.OrdinalIgnoreCase))
+            if (_tymy.Count == 0)
             {
-                tym = hledany;
-                break;
+                Console.WriteLine("Zatím nejsou vytvořeny žádné týmy.");
+                return;
+            }
+
+            foreach (Tym tym in _tymy)
+            {
+                Console.WriteLine(tym);
             }
         }
-
-        // Kontrola, zda tým existuje
-        if (tym == null)
+        public bool PridatHraceDoTymu(string prezdivka, string nazevTymu)
         {
-            Console.WriteLine("Tým nebyl nalezen.");
-            return false;
-        }
+            // Vyhledání hráče
+            Hrac? hrac = _hraci.Find(h =>
+                string.Equals(
+                    h.Prezdivka,
+                    prezdivka,
+                    StringComparison.OrdinalIgnoreCase));
 
-        // Odebrání všech hráčů z týmu
-        foreach (Hrac hrac in tym.Hraci.ToList())
+            if (hrac == null)
+            {
+                Console.WriteLine("Hráč nebyl nalezen.");
+                return false;
+            }
+
+            // Vyhledání týmu
+            Tym? tym = _tymy.Find(t =>
+                string.Equals(
+                    t.Nazev,
+                    nazevTymu,
+                    StringComparison.OrdinalIgnoreCase));
+
+            if (tym == null)
+            {
+                Console.WriteLine("Tým nebyl nalezen.");
+                return false;
+            }
+
+            // Přidání hráče do týmu
+            bool uspech = tym.PridatHrace(hrac);
+
+            if (uspech)
+            {
+                Console.WriteLine(
+                    $"Hráč {prezdivka} byl přidán do týmu {nazevTymu}.");
+            }
+            else
+            {
+                Console.WriteLine(
+                    "Hráče se nepodařilo přidat. " +
+                    "Možná už patří do jiného týmu.");
+            }
+
+            return uspech;
+        }
+        public bool OdebratHraceZTymu(string prezdivka, string nazevTymu)
         {
-            tym.OdebratHrace(hrac);
+            // Vyhledání hráče
+            Hrac? hrac = _hraci.Find(h =>
+                string.Equals(
+                    h.Prezdivka,
+                    prezdivka,
+                    StringComparison.OrdinalIgnoreCase));
+
+            if (hrac == null)
+            {
+                Console.WriteLine("Hráč nebyl nalezen.");
+                return false;
+            }
+
+            // Vyhledání týmu
+            Tym? tym = _tymy.Find(t =>
+                string.Equals(
+                    t.Nazev,
+                    nazevTymu,
+                    StringComparison.OrdinalIgnoreCase));
+
+            if (tym == null)
+            {
+                Console.WriteLine("Tým nebyl nalezen.");
+                return false;
+            }
+
+            // Odebrání hráče z týmu
+            bool uspech = tym.OdebratHrace(hrac);
+
+            if (uspech)
+                Console.WriteLine($"Hráč {prezdivka} byl odebrán z týmu {nazevTymu}.");
+            else
+                Console.WriteLine("Hráč není členem tohoto týmu.");
+
+            return uspech;
         }
-
-        // Odstranění týmu z evidence
-        _tymy.Remove(tym);
-
-        Console.WriteLine($"Tým {nazev} byl smazán.");
-
-        return true;
     }
-    public void VypsatVsechnyHrace()
-    {
-        Console.WriteLine("\n=== SEZNAM HRÁČŮ ===");
-
-        if (_hraci.Count == 0)
-        {
-            Console.WriteLine("Zatím nejsou registrováni žádní hráči.");
-            return;
-        }
-
-        foreach (Hrac hrac in _hraci)
-        {
-            string tym = hrac.PrirazenyTym?.Nazev ?? "Bez týmu";
-
-            Console.WriteLine(
-                $"Jméno: {hrac.Jmeno} | " +
-                $"Přezdívka: {hrac.Prezdivka} | " +
-                $"Tým: {tym}");
-        }
-    }
-    public void VypsatVsechnyTymy()
-    {
-        Console.WriteLine("\n=== SEZNAM TÝMŮ ===");
-
-        if (_tymy.Count == 0)
-        {
-            Console.WriteLine("Zatím nejsou vytvořeny žádné týmy.");
-            return;
-        }
-
-        foreach (Tym tym in _tymy)
-        {
-            Console.WriteLine(tym);
-        }
-    }
-    public bool PridatHraceDoTymu(string prezdivka, string nazevTymu)
-    {
-        // Vyhledání hráče
-        Hrac? hrac = _hraci.Find(h =>
-            string.Equals(
-                h.Prezdivka,
-                prezdivka,
-                StringComparison.OrdinalIgnoreCase));
-
-        if (hrac == null)
-        {
-            Console.WriteLine("Hráč nebyl nalezen.");
-            return false;
-        }
-
-        // Vyhledání týmu
-        Tym? tym = _tymy.Find(t =>
-            string.Equals(
-                t.Nazev,
-                nazevTymu,
-                StringComparison.OrdinalIgnoreCase));
-
-        if (tym == null)
-        {
-            Console.WriteLine("Tým nebyl nalezen.");
-            return false;
-        }
-
-        // Přidání hráče do týmu
-        bool uspech = tym.PridatHrace(hrac);
-
-        if (uspech)
-            Console.WriteLine($"Hráč {prezdivka} byl přidán do týmu {nazevTymu}.");
-
-        return uspech;
-    }
-    public bool OdebratHraceZTymu(string prezdivka, string nazevTymu)
-    {
-        // Vyhledání hráče
-        Hrac? hrac = _hraci.Find(h =>
-            string.Equals(
-                h.Prezdivka,
-                prezdivka,
-                StringComparison.OrdinalIgnoreCase));
-
-        if (hrac == null)
-        {
-            Console.WriteLine("Hráč nebyl nalezen.");
-            return false;
-        }
-
-        // Vyhledání týmu
-        Tym? tym = _tymy.Find(t =>
-            string.Equals(
-                t.Nazev,
-                nazevTymu,
-                StringComparison.OrdinalIgnoreCase));
-
-        if (tym == null)
-        {
-            Console.WriteLine("Tým nebyl nalezen.");
-            return false;
-        }
-
-        // Odebrání hráče z týmu
-        bool uspech = tym.OdebratHrace(hrac);
-
-        if (uspech)
-            Console.WriteLine($"Hráč {prezdivka} byl odebrán z týmu {nazevTymu}.");
-        else
-            Console.WriteLine("Hráč není členem tohoto týmu.");
-
-        return uspech;
-    }
-
 }

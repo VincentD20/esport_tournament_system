@@ -24,6 +24,8 @@ namespace Esport_tournament_system
 
         public int RozdilSkore => VstreleneGoly - ObdrzeneGoly;
 
+        public int PocetOdehranychZapasu => PocetVyher + PocetProher + PocetRemiz;
+
         public Tym(string nazev)
         {
             if (string.IsNullOrWhiteSpace(nazev))
@@ -42,8 +44,7 @@ namespace Esport_tournament_system
                 return false;
 
             if (hrac.PrirazenyTym != null)
-                throw new InvalidOperationException(
-                    "Hráč už je přiřazen k jinému týmu.");
+                return false;
 
             _hraci.Add(hrac);
             hrac.PrirazenyTym = this;
@@ -58,6 +59,9 @@ namespace Esport_tournament_system
                 throw new ArgumentNullException(nameof(hrac));
 
             if (!_hraci.Remove(hrac))
+                return false;
+
+            if (hrac.PrirazenyTym != this)
                 return false;
 
             hrac.PrirazenyTym = null;
