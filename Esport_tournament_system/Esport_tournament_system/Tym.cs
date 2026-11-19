@@ -1,9 +1,6 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Esport_tournament_system
 {
     public class Tym
@@ -14,22 +11,11 @@ namespace Esport_tournament_system
 
         public IReadOnlyList<Hrac> Hraci => _hraci.AsReadOnly();
 
-        public int PocetVyher { get; private set; }
-        public int PocetProher { get; private set; }
-        public int PocetRemiz { get; private set; }
-        public int PocetBodu { get; private set; }
-
-        public int VstreleneGoly { get; private set; }
-        public int ObdrzeneGoly { get; private set; }
-
-        public int RozdilSkore => VstreleneGoly - ObdrzeneGoly;
-
-        public int PocetOdehranychZapasu => PocetVyher + PocetProher + PocetRemiz;
-
         public Tym(string nazev)
         {
             if (string.IsNullOrWhiteSpace(nazev))
-                throw new ArgumentException("Název týmu nesmí být prázdný.");
+                throw new ArgumentException(
+                    "Název týmu nesmí být prázdný.");
 
             Nazev = nazev;
         }
@@ -58,42 +44,15 @@ namespace Esport_tournament_system
             if (hrac == null)
                 throw new ArgumentNullException(nameof(hrac));
 
-            if (!_hraci.Remove(hrac))
+            if (hrac.PrirazenyTym != this)
                 return false;
 
-            if (hrac.PrirazenyTym != this)
+            if (!_hraci.Remove(hrac))
                 return false;
 
             hrac.PrirazenyTym = null;
 
             return true;
-        }
-
-        // Evidence výsledku zápasu
-        public void ZaznamenejVysledek(
-            int vstreleneSkore,
-            int obdrzeneSkore)
-        {
-            if (vstreleneSkore < 0 || obdrzeneSkore < 0)
-                throw new ArgumentException("Skóre nesmí být záporné.");
-
-            VstreleneGoly += vstreleneSkore;
-            ObdrzeneGoly += obdrzeneSkore;
-
-            if (vstreleneSkore > obdrzeneSkore)
-            {
-                PocetVyher++;
-                PocetBodu += 3;
-            }
-            else if (vstreleneSkore < obdrzeneSkore)
-            {
-                PocetProher++;
-            }
-            else
-            {
-                PocetRemiz++;
-                PocetBodu += 1;
-            }
         }
 
         // Výpis hráčů týmu
@@ -103,7 +62,8 @@ namespace Esport_tournament_system
 
             if (_hraci.Count == 0)
             {
-                Console.WriteLine("Tým zatím nemá žádné hráče.");
+                Console.WriteLine(
+                    "Tým zatím nemá žádné hráče.");
                 return;
             }
 
@@ -115,10 +75,7 @@ namespace Esport_tournament_system
 
         public override string ToString()
         {
-            return $"{Nazev} | Hráči: {_hraci.Count} | " +
-                   $"Výhry: {PocetVyher} | Prohry: {PocetProher} | " +
-                   $"Body: {PocetBodu}";
+            return $"{Nazev} | Hráči: {_hraci.Count}";
         }
     }
-
 }

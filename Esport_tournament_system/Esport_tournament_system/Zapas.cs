@@ -1,15 +1,10 @@
 ﻿
 using System;
-using System.Collections.Generic;
 
 namespace Esport_tournament_system
 {
     public class Zapas
     {
-        // Seznam všech zápasů
-        public static List<Zapas> SeznamZapasu { get; }
-            = new List<Zapas>();
-
         // Týmy
         public Tym DomaciTym { get; private set; }
         public Tym HostujiciTym { get; private set; }
@@ -18,17 +13,20 @@ namespace Esport_tournament_system
         public int SkoreDomaci { get; private set; }
         public int SkoreHoste { get; private set; }
 
-        // Vítěz zápasu
-        public Tym Vitez { get; private set; }
+        // Vítěz zápasu (null při remíze)
+        public Tym? Vitez { get; private set; }
 
         // Stav zápasu
         public bool Odehrano { get; private set; }
 
-        // Konstruktor
-        public Zapas(Tym domaci, Tym hostujici)
+        // Konstruktor – zápas vytváří Turnaj
+        internal Zapas(Tym domaci, Tym hostujici)
         {
-            if (domaci == null || hostujici == null)
-                throw new ArgumentNullException("Týmy nesmí být null.");
+            if (domaci == null)
+                throw new ArgumentNullException(nameof(domaci));
+
+            if (hostujici == null)
+                throw new ArgumentNullException(nameof(hostujici));
 
             if (domaci == hostujici)
                 throw new ArgumentException(
@@ -39,12 +37,12 @@ namespace Esport_tournament_system
 
             Odehrano = false;
             Vitez = null;
-
-            SeznamZapasu.Add(this);
         }
 
-        // Zapsání výsledku zápasu
-        public void ZapsatVysledek(int skoreDomaci, int skoreHoste)
+        // Zapsání výsledku – volá Turnaj
+        internal void ZapsatVysledek(
+            int skoreDomaci,
+            int skoreHoste)
         {
             if (Odehrano)
                 throw new InvalidOperationException(
@@ -56,13 +54,6 @@ namespace Esport_tournament_system
 
             SkoreDomaci = skoreDomaci;
             SkoreHoste = skoreHoste;
-
-            // Aktualizace statistik obou týmů
-            DomaciTym.ZaznamenejVysledek(
-                SkoreDomaci, SkoreHoste);
-
-            HostujiciTym.ZaznamenejVysledek(
-                SkoreHoste, SkoreDomaci);
 
             // Určení vítěze
             if (SkoreDomaci > SkoreHoste)
@@ -101,26 +92,11 @@ namespace Esport_tournament_system
             }
             else
             {
-                Console.WriteLine("Zápas zatím nebyl odehrán.");
+                Console.WriteLine(
+                    "Zápas zatím nebyl odehrán.");
             }
 
             Console.WriteLine("--------------------------------");
-        }
-
-        // Výpis všech zápasů
-        public static void VypsatVsechnyZapasy()
-        {
-            if (SeznamZapasu.Count == 0)
-            {
-                Console.WriteLine(
-                    "Zatím nebyly vytvořeny žádné zápasy.");
-                return;
-            }
-
-            foreach (Zapas zapas in SeznamZapasu)
-            {
-                zapas.VypsatZapas();
-            }
         }
     }
 }
