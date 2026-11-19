@@ -116,5 +116,4 @@ namespace Esport_tournament_system
                    $"Body: {PocetBodu}";
         }
     }
-
 }

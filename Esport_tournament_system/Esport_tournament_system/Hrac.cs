@@ -32,5 +32,4 @@ namespace Esport_tournament_system
             return $"{Prezdivka} ({Jmeno})";
         }
     }
-
 }
